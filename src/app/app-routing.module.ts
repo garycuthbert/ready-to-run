@@ -13,6 +13,10 @@ import { WelcomeComponent } from './home/welcome.component';
         path: '', component: ShellComponent,
         children: [
           { path: 'welcome', component: WelcomeComponent },
+          {
+            path: "standards",
+            loadChildren: () => import('./standards/standards.module').then(m => m.StandardsModule)
+          },
           { path: '', redirectTo: 'welcome', pathMatch: 'full' }
         ]
       },
