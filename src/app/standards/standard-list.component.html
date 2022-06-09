@@ -1,1 +1,27 @@
-<p>standard-list works!</p>
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table mb-0"
+            *ngIf="standards?.length">
+        <thead>
+          <tr>
+            <th>Standard</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let standard of standards">
+            <td>{{standard.title}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="errorMessage"
+    class="alert alert-danger">
+    Error: {{ errorMessage }}
+</div>
