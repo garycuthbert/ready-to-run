@@ -28,3 +28,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Use the following to inject into index.html, this allows the page to locate the scripts reference in the file from the ws sub directory
 ng build --base-href /ready-to-run/
+N.B. 
+running above from git-bash prefixes the gitbash exe directory to the base href so run from a windows cmd shell
