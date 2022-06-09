@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './home/menu.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { ShellComponent } from './home/shell.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { FakedData } from './fakedData/faked-data';
 
 @NgModule({
   declarations: [
@@ -16,6 +19,8 @@ import { ShellComponent } from './home/shell.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(FakedData),
     AppRoutingModule
   ],
   providers: [],
