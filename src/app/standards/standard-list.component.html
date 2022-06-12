@@ -9,11 +9,13 @@
             *ngIf="standards?.length">
         <thead>
           <tr>
+            <th>#</th>
             <th>Standard</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let standard of standards">
+            <td>{{standard.number}}</td>
             <td>{{standard.title}}</td>
           </tr>
         </tbody>
