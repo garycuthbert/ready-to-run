@@ -9,6 +9,7 @@ import { ShellComponent } from './home/shell.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FakedData } from './fakedData/faked-data';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FakedData } from './fakedData/faked-data';
     BrowserModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(FakedData),
+    UserModule,
     AppRoutingModule
   ],
   providers: [],
