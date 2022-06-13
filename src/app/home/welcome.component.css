@@ -1,0 +1,12 @@
+.logo_background {
+  background-image: url('/assets/images/square_dawn_logo.png');
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  width: inherit;
+  height: auto;
+  /* height: calc(0.4911 * 100vw); */
+  /* padding-top: 8.5%; */
+  /* (img-height /img-width * container width */
+                /* (138 / 281) * 100 */
+}
