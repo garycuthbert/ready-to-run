@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="list-group">
+    <button type="button"
+      class="list-group-item"
+      *ngFor="let standard of standards"
+      [attr.title]="getStandardTooltip(standard)"
+      [ngClass]="{ 'active' : standard?.id === selectedStandard?.id}"
+      (click)="onSelected(standard)">
+      {{getStandardText(standard)}}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="errorMessage"
+    class="alert alert-danger">
+    Error: {{ errorMessage }}
+</div>
