@@ -15,6 +15,7 @@ export class StandardSummaryListComponent implements OnInit, OnDestroy {
   standards: IStandard[] | undefined;
   selectedStandard!: IStandard | null;
   sub!: Subscription;
+  readyRating: number = 5;
 
   constructor(private standardService: StandardService) { }
 
