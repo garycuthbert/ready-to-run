@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { IStandard } from './standard';
 
@@ -11,7 +11,14 @@ export class StandardService {
   private standardsUrl = 'api/standards';
   private standards: IStandard[] | undefined;
 
+  private selectedStandardSource = new BehaviorSubject<IStandard | null>(null);
+  selectedStandardChanges$ = this.selectedStandardSource.asObservable();
+
   constructor(private http: HttpClient) { }
+
+  changeSelectedStandard(selectedStandard: IStandard | null) : void {
+    this.selectedStandardSource.next(selectedStandard);
+  }
 
   getStandards(): Observable<IStandard[]> {
     if (this.standards) {
