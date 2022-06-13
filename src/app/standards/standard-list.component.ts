@@ -1,24 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IExercise } from '../exercises/exercise';
 import { ExerciseService } from '../exercises/exercise.service';
 import { IStandard } from './standard';
 import { StandardService } from './standard.service';
 
 @Component({
-  selector: 'app-standard-list',
+  selector: 'rtr-standard-list',
   templateUrl: './standard-list.component.html',
   styleUrls: ['./standard-list.component.css']
 })
-export class StandardListComponent implements OnInit {
+export class StandardListComponent implements OnInit, OnDestroy {
   pageTitle = 'Standards List';
-  errorMessage: string = '';
-  standards: IStandard[] | undefined;
+  errorMessage!: string;
+  standards!: IStandard[];
+  selectedStandard!: IStandard | null;
+  sub!: Subscription;
   excerises: IExercise[] | undefined;
 
   constructor(private standardService: StandardService,
               private exerciseService: ExerciseService) { }
 
   ngOnInit(): void {
+
+    this.sub = this.standardService.selectedStandardChanges$.subscribe(
+      selectedStandard => this.selectedStandard = selectedStandard
+    );
+
     this.standardService.getStandards().subscribe({
       next: (standards: IStandard[]) => {
         this.standards = standards;
@@ -34,4 +42,11 @@ export class StandardListComponent implements OnInit {
     });
   }
 
+  onSelected(standard: IStandard) : void {
+    this.standardService.changeSelectedStandard(standard);
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 }

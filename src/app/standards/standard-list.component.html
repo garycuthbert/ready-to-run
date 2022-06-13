@@ -1,28 +1,16 @@
 <div class="card">
-  <div class="card-header">
-    {{pageTitle}}
-  </div>
-
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table mb-0"
-            *ngIf="standards?.length">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Standard</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let standard of standards">
-            <td>{{standard.number}}</td>
-            <td>{{standard.title}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="list-group">
+    <button type="button"
+      class="list-group-item"
+      *ngFor="let standard of standards"
+      [attr.title]="standard.title"
+      [ngClass]="{ 'active' : standard?.id === selectedStandard?.id}"
+      (click)="onSelected(standard)">
+      {{standard.number}}
+    </button>
   </div>
 </div>
+
 <div *ngIf="errorMessage"
     class="alert alert-danger">
     Error: {{ errorMessage }}
