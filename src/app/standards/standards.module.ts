@@ -5,6 +5,7 @@ import { StandardShellComponent } from './standard-shell.component';
 import { StandardDetailShellComponent } from './standard-detail-shell.component';
 import { StandardSummaryListComponent } from './standard-summary-list.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -17,7 +18,8 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule,
     // RouterModule.forChild([
     //   { path: 'summary', component: StandardListComponent },
     //   { path: 'standards', component: StandardShellComponent }
