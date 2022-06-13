@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FakedData } from './fakedData/faked-data';
 import { UserModule } from './user/user.module';
+import { StandardsModule } from './standards/standards.module';
+import { ExerciseModule } from './exercises/exercise.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { UserModule } from './user/user.module';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(FakedData),
     UserModule,
+    StandardsModule,
+    ExerciseModule,
     AppRoutingModule
   ],
   providers: [],
