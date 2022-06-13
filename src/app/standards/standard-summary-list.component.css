@@ -1,0 +1,13 @@
+thead {
+  color: #337AB7;
+  font-weight: bold;
+}
+
+.table tr.active {
+  background-color: #7d96ac;
+  color: white;
+}
+
+.table tr.active a {
+  color: white;
+}

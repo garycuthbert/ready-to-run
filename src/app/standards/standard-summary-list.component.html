@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card-header d-flex">
+    <span>{{pageTitle}}</span>
+    <span class="ms-auto">{{loginMessage}}</span>
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table mb-0"
+            *ngIf="standards?.length">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Standard</th>
+            <th>Assessment</th>
+            <th>Notes</th>
+            <th>Last Tested</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let standard of standards"
+            [ngClass]="{ 'active' : standard.id === selectedStandard?.id}">
+            <td><a (click)="onToggleSelectedStandard(standard)">{{standard.number}}</a></td>
+            <td><a (click)="onSelectedStandard(standard)"
+                  [routerLink]="['/standards']">{{standard.title}}</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="errorMessage"
+    class="alert alert-danger">
+    Error: {{ errorMessage }}
+</div>
