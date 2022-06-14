@@ -22,7 +22,7 @@
             [ngClass]="{ 'active' : standard.id === selectedStandard?.id}">
             <td><a (click)="onToggleSelectedStandard(standard)">{{standard.number}}</a></td>
             <td><a (click)="onSelectedStandard(standard)"
-                  [routerLink]="['/standards']">{{standard.title}}</a></td>
+                  [routerLink]="['/standards', standard.id]">{{standard.title}}</a></td>
             <td>
                <rtr-ready-rating [rating]='readyRating'></rtr-ready-rating>
             </td>
