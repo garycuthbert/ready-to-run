@@ -98,7 +98,8 @@ export class FakedData implements InMemoryDbService {
       {
         id: 3,
         title: 'Couch Stretch',
-        introduction: undefined,
+        introduction: "The couch stretch is a weapons-grade technique to "+
+        "open up the hip and open up some slack upstream of the knee.",
         steps: []
       }
     ];
