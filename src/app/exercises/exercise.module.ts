@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExerciseListComponent } from './exercise-list.component';
 import { ExerciseShellComponent } from './exercise-shell.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { ExerciseCardsComponent } from './exercise-cards.component';
 import { ExerciseCardComponent } from './exercise-card.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,7 +16,15 @@ import { ExerciseCardComponent } from './exercise-card.component';
     ExerciseCardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule.forChild([
+      {
+        path: 'exercises',
+        children: [
+          { path: '', component: ExerciseShellComponent }
+        ]
+      }
+    ])
   ]
 })
 export class ExerciseModule { }
