@@ -25,7 +25,7 @@ import { StandardSummaryListComponent } from './standards/standard-summary-list.
           { path: '', redirectTo: 'welcome', pathMatch: 'full' }
         ]
       },
-      {path: '**', component: PageNotFoundComponent }
+      { path: '**', component: PageNotFoundComponent }
     ]),
   ],
   exports: [RouterModule]
