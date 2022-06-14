@@ -3,8 +3,10 @@ import { RouterModule } from '@angular/router';
 import { ExerciseShellComponent } from './exercises/exercise-shell.component';
 import { ShellComponent } from './home/shell.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 import { StandardShellComponent } from './standards/standard-shell.component';
 import { StandardSummaryListComponent } from './standards/standard-summary-list.component';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -23,6 +25,7 @@ import { StandardSummaryListComponent } from './standards/standard-summary-list.
           { path: '', redirectTo: 'welcome', pathMatch: 'full' }
         ]
       },
+      {path: '**', component: PageNotFoundComponent }
     ]),
   ],
   exports: [RouterModule]
