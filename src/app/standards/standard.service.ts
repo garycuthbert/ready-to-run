@@ -33,6 +33,22 @@ export class StandardService {
         );
   }
 
+  getStandard(id: number): Observable<IStandard> {
+    if (this.standards) {
+      const foundItem = this.standards.find(item => item.id === id);
+      if (foundItem) {
+        return of(foundItem);
+      }
+    }
+
+    const url = `${this.standardsUrl}/${id}`;
+    return this.http.get<IStandard>(url)
+      .pipe(
+        tap(data => console.log('getStandard: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
