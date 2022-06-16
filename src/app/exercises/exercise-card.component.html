@@ -2,6 +2,6 @@
   <div class="card-header">{{exercise.title}}</div>
   <div class="card-body">
     <p>{{exercise?.introduction ? exercise?.introduction : 'No introduction necessary!'}}</p>
-    <a class="btn btn-primary">Details</a>
+    <a class="btn btn-primary" [routerLink]="['/exercises', exercise.id]">Details</a>
   </div>
 </div>
