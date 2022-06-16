@@ -5,6 +5,8 @@ import { ExerciseShellComponent } from './exercise-shell.component';
 import { ExerciseCardsComponent } from './exercise-cards.component';
 import { ExerciseCardComponent } from './exercise-card.component';
 import { RouterModule } from '@angular/router';
+import { ExerciseDetailComponent } from './exercise-detail.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -13,15 +15,18 @@ import { RouterModule } from '@angular/router';
     ExerciseListComponent,
     ExerciseShellComponent,
     ExerciseCardsComponent,
-    ExerciseCardComponent
+    ExerciseCardComponent,
+    ExerciseDetailComponent
   ],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'exercises',
         children: [
-          { path: '', component: ExerciseShellComponent }
+          { path: '', component: ExerciseShellComponent },
+          { path: ':id', component: ExerciseDetailComponent }
         ]
       }
     ])
