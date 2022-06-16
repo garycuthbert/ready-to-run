@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { EMPTY, Subscription } from 'rxjs';
+import { NavigationHistoryService } from '../shared/navigation-history.service';
 import { IStandard } from './standard';
 import { StandardService } from './standard.service';
 
@@ -15,6 +16,7 @@ export class StandardDetailComponent implements OnInit {
   errorMessage: string = '';
 
   constructor(private standardService: StandardService,
+              private navigationService: NavigationHistoryService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -45,5 +47,9 @@ export class StandardDetailComponent implements OnInit {
     } else {
       this.pageTitle = 'Standard not found!';
     }
+  }
+
+  onBack(): void {
+    this.navigationService.goBack();
   }
 }

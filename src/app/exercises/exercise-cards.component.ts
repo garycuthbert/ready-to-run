@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationHistoryService } from '../shared/navigation-history.service';
 import { IExercise } from './exercise';
 
 @Component({
@@ -29,9 +30,12 @@ export class ExerciseCardsComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private navHistory: NavigationHistoryService) { }
 
   ngOnInit(): void {
   }
 
+  onBack(): void {
+    this.navHistory.goBack();
+  }
 }
