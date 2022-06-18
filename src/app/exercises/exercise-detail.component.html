@@ -12,7 +12,7 @@
               Step {{(i+1)}}
             </button>
           </h2>
-          <div class="accordion-body" [id]="'collapse' + (i+1)" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingStep' + (i+1)" [attr.data-bs-parent]="'#' + accordionId()">
+          <div class="accordion-body" [id]="'collapse' + (i+1)" [ngClass]="{'show' : i===0}" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingStep' + (i+1)" [attr.data-bs-parent]="'#' + accordionId()">
             <div *ngIf="step.imagePath">
               <img [src]="step.imagePath" />
             </div>
