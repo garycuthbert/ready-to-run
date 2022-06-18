@@ -1,6 +1,27 @@
-<div>
-  <div class="card-header">Exercise Title Here</div>
-  <div class="card-body"> content ... </div>
+<div class="card">
+  <div class="card-header">{{exercise.title}}</div>
+  <div class="card-body">
+    <div *ngIf="exercise.introduction">
+      <p>{{exercise.introduction}}</p>
+    </div>
+    <div *ngIf="exercise.steps.length">
+      <div class="accordion" [id]="accordionId()">
+        <div class="accordion-item" *ngFor="let step of exercise.steps; let i = index">
+          <h2 class="accordion-header" [id]="'headingStep' + (i+1)">
+            <button class="accordion-button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + (i+1)" aria-expanded="true" [attr.aria-controls]="'collapse' + (i+1)">
+              Step {{(i+1)}}
+            </button>
+          </h2>
+          <div class="accordion-body" [id]="'collapse' + (i+1)" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingStep' + (i+1)" [attr.data-bs-parent]="'#' + accordionId()">
+            <div *ngIf="step.imagePath">
+              <img [src]="step.imagePath" />
+            </div>
+            <div *ngFor="let p of step.paragraphs">{{p}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card-footer">
     <a class="btn btn-primary" (click)="onBack()">Back</a>
   </div>
