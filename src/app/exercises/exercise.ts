@@ -1,4 +1,4 @@
-import { IStep } from "../shared/step";
+import { IStep } from "../step/step";
 
 export interface IExercise {
   id: number;

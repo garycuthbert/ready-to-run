@@ -1,7 +1,7 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { IStandard } from '../standards/standard';
 import { IExercise } from '../exercises/exercise';
-import { IStep } from '../shared/step';
+import { IStep } from '../step/step';
 
 export class FakedData implements InMemoryDbService {
   createDb() {
