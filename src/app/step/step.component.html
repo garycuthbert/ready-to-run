@@ -1,0 +1,20 @@
+<div class="container">
+  <div *ngIf="!step" fxLayout="column" fxLayoutAlign="center center">
+    <div>{{missing}}</div>
+  </div>
+  <div *ngIf="step" fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutGap="10px">
+      <div class="step-image-container" fxFlex="0 1 400px">
+        <img [src]="step.imagePath"/>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="flex-start center" fxLayoutGap="1em" fxFlex="60">
+        <div *ngFor="let para of step.paragraphs | slice:0:2">
+          {{para}}
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let para of step.paragraphs | slice:3">
+      {{para}}
+    </div>
+  </div>
+</div>

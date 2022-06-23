@@ -1,0 +1,9 @@
+.container {
+  margin: 10px;
+}
+
+.step-image-container img {
+  width: 100%;
+  border-radius: 5%;
+  border: 1px solid black;
+}
