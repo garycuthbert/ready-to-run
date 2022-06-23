@@ -7,7 +7,8 @@ import { ExerciseCardComponent } from './exercise-card.component';
 import { RouterModule } from '@angular/router';
 import { ExerciseDetailComponent } from './exercise-detail.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { StepModule } from '../step/step.module';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    StepModule,
+    FlexLayoutModule,
     RouterModule.forChild([
       {
         path: 'exercises',

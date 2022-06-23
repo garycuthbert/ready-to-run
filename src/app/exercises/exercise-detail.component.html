@@ -1,31 +1,38 @@
 <div class="card">
-  <div class="card-header">{{exercise.title}}</div>
+  <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>{{ exercise.title }}</div>
+    <div><a class="btn btn-primary" (click)="onBack()">Back</a></div>
+  </div>
   <div class="card-body">
-    <div *ngIf="exercise.introduction">
-      <p>{{exercise.introduction}}</p>
-    </div>
-    <div *ngIf="exercise.steps.length">
-      <div class="accordion" [id]="accordionId()">
-        <div class="accordion-item" *ngFor="let step of exercise.steps; let i = index">
-          <h2 class="accordion-header" [id]="'headingStep' + (i+1)">
-            <button class="accordion-button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + (i+1)" aria-expanded="true" [attr.aria-controls]="'collapse' + (i+1)">
-              Step {{(i+1)}}
-            </button>
-          </h2>
-          <div class="accordion-body" [id]="'collapse' + (i+1)" [ngClass]="{'show' : i===0}" class="accordion-collapse collapse" [attr.aria-labelledby]="'headingStep' + (i+1)" [attr.data-bs-parent]="'#' + accordionId()">
-            <!-- <div *ngIf="step.imagePath" class="col">
-              <img *ngIf="step.imagePath" [src]="step.imagePath" class="rounded float-right"/>
-            </div>
-              <div *ngFor="let p of step.paragraphs" class="col">{{p}}</div> -->
-            <div class="d-flex flex-row justify-content-between">
-              <div class="p-1"><img [src]="step.imagePath"/></div>
-              <div>&nbsp;&nbsp;</div>
-              <div class="d-flex flex-column justify-content-start align-items-center">
-                <div *ngFor="let p of step.paragraphs; let first = first" class="p-2">
-                  <br *ngIf="!first">
-                  {{p}}
-                </div>
-              </div>
+    <div class="row">
+      <div *ngIf="exercise.introduction">
+        <p>{{ exercise.introduction }}</p>
+      </div>
+      <div class="row" *ngIf="exercise.steps.length">
+        <div class="accordion" [id]="accordionId()">
+          <div
+            class="accordion-item"
+            *ngFor="let step of exercise.steps; let i = index"
+          >
+            <h2 class="accordion-header" [id]="'headingStep' + (i + 1)">
+              <button
+                class="accordion-button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + (i + 1)"
+                aria-expanded="true"
+                [attr.aria-controls]="'collapse' + (i + 1)"
+              >
+                Step {{ i + 1 }}
+              </button>
+            </h2>
+            <div
+              class="accordion-body"
+              [id]="'collapse' + (i + 1)"
+              [ngClass]="{ show: i === 0 }"
+              class="accordion-collapse collapse"
+              [attr.aria-labelledby]="'headingStep' + (i + 1)"
+              [attr.data-bs-parent]="'#' + accordionId()">
+              <rtr-step [step]="step"></rtr-step>
             </div>
           </div>
         </div>
