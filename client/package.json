@@ -1,5 +1,5 @@
 {
-  "name": "ready-to-run",
+  "name": "ready-to-run-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
