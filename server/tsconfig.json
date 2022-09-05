@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      //"@shared/*": ["../client/src/app/shared/*"]
+      "@shared/*": ["../../client/src/shared/*"]
     },
     "target": "es6",
     "module": "commonjs",
