@@ -8,6 +8,7 @@ import express from 'express';
 import http from "http";
 
 import path from "path";
+import { Standards } from './model/standards.model';
 //import compression from 'compression';
 
 class Server {
@@ -56,10 +57,17 @@ class Server {
         //     lastModified: true,                   // Explicit default
         // }));
 
+        const standards = new Standards();
+
         /*********************************************
         * Any specific get handlers go here before the
         * angular get * which swallows all gets
         *********************************************/
+
+        this.app.get('/webui/standards', (req: any, res: any) => {
+            const response = standards.getAllStandards();
+            return res.json(response);
+        });
 
         const port = process.env.port || this.port;
         this.httpServer.listen(port, () => {

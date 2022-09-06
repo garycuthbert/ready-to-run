@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IStandard } from './standard';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 import { StandardService } from './standard.service';
 
 @Component({
@@ -12,8 +12,8 @@ export class StandardSummaryListComponent implements OnInit, OnDestroy {
   pageTitle = 'Standards Overview';
   loginMessage = 'Login to track your progress!';
   errorMessage: string = '';
-  standards: IStandard[] | undefined;
-  selectedStandard!: IStandard | null;
+  standards: ReadyToRunDTOs.IStandard[] | undefined;
+  selectedStandard!: ReadyToRunDTOs.IStandard | null;
   sub!: Subscription;
   readyRating: number = 5;
 
@@ -26,16 +26,16 @@ export class StandardSummaryListComponent implements OnInit, OnDestroy {
     );
 
     this.standardService.getStandards().subscribe({
-      next: (standards: IStandard[]) => { this.standards = standards },
+      next: (standards: ReadyToRunDTOs.IStandard[]) => { this.standards = standards },
       error: err => this.errorMessage = err
     });
   }
 
-  onSelectedStandard(standard: IStandard) : void {
+  onSelectedStandard(standard: ReadyToRunDTOs.IStandard) : void {
       this.standardService.changeSelectedStandard(standard);
   }
 
-  onToggleSelectedStandard(standard: IStandard) : void {
+  onToggleSelectedStandard(standard: ReadyToRunDTOs.IStandard) : void {
 
     if (standard.id == this.selectedStandard?.id) {
       this.standardService.changeSelectedStandard(null);

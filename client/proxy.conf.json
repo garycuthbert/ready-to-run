@@ -1,6 +1,8 @@
-{
-  "/api": {
-    "target": "http://localhost:3080",
-    "secure": false
+[
+  {
+    "context": ["/webui", "/api"],
+    "target": "http://localhost:8999",
+    "secure": false,
+    "changeOrigin": false
   }
-}
+]

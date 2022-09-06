@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AllStandardsStandard, IStandard } from '../standards/standard';
+import { AllStandardsStandard } from '../standards/standard';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 import { StandardService } from '../standards/standard.service';
 import { ExerciseService } from './exercise.service';
 
@@ -11,8 +12,8 @@ import { ExerciseService } from './exercise.service';
 })
 export class ExerciseListComponent implements OnInit, OnDestroy {
   errorMessage!: string;
-  standards: IStandard[] = [ AllStandardsStandard ];
-  selectedStandard!: IStandard | null;
+  standards: ReadyToRunDTOs.IStandard[] = [ AllStandardsStandard ];
+  selectedStandard!: ReadyToRunDTOs.IStandard | null;
   sub!: Subscription;
   //excerises: IExercise[] | undefined;
 
@@ -26,14 +27,14 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
     );
 
     this.standardService.getStandards().subscribe({
-      next: (standards: IStandard[]) => {
+      next: (standards: ReadyToRunDTOs.IStandard[]) => {
         this.standards = this.standards.concat(standards);
       },
       error: err => this.errorMessage = err
     });
   }
 
-  onSelected(standard: IStandard) : void {
+  onSelected(standard: ReadyToRunDTOs.IStandard) : void {
     if (standard?.id === AllStandardsStandard.id) {
       // Keep the 'All' assignment local to this component
       this.selectedStandard = standard;
@@ -43,7 +44,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
     }
   }
 
-  getStandardText(standard: IStandard): string {
+  getStandardText(standard: ReadyToRunDTOs.IStandard): string {
     if (standard?.id === AllStandardsStandard.id) {
       return standard.title;
     }
@@ -51,7 +52,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
     return '' + standard.number;
   }
 
-  getStandardTooltip(standard: IStandard): string {
+  getStandardTooltip(standard: ReadyToRunDTOs.IStandard): string {
     if (standard?.id === AllStandardsStandard.id) {
       return 'All Standards';
     }

@@ -1,0 +1,16 @@
+{
+    "standards": [
+        {
+            "id": 1,
+            "number": 1,
+            "title": "Neutral Feet",
+            "question": "Are your feet habitually in a neutral position?"
+        },
+        {
+            "id": 2,
+            "number": 2,
+            "title": "Flat Shoes",
+            "question": "Do you wear flat shoes?"
+        }
+    ]
+}

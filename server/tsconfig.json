@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@shared/*": ["../../client/src/shared/*"]
+      "@shared/*": ["../../client/src/app/shared/*"]
     },
     "target": "es6",
     "module": "commonjs",

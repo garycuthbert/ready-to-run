@@ -1,11 +1,11 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { IStandard } from '../standards/standard';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 import { IExercise } from '../exercises/exercise';
 import { IStep } from '../step/step';
 
 export class FakedData implements InMemoryDbService {
   createDb() {
-    const standards: IStandard[] = [
+    const standards: ReadyToRunDTOs.IStandard[] = [
       {
         id: 1,
         number: 1,

@@ -2,30 +2,30 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { IStandard } from './standard';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StandardService {
   private standardsUrl = 'api/standards';
-  private standards: IStandard[] | undefined;
+  private standards: ReadyToRunDTOs.IStandard[] | undefined;
 
-  private selectedStandardSource = new BehaviorSubject<IStandard | null>(null);
+  private selectedStandardSource = new BehaviorSubject<ReadyToRunDTOs.IStandard | null>(null);
   selectedStandardChanges$ = this.selectedStandardSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  changeSelectedStandard(selectedStandard: IStandard | null) : void {
+  changeSelectedStandard(selectedStandard: ReadyToRunDTOs.IStandard | null) : void {
     this.selectedStandardSource.next(selectedStandard);
   }
 
-  getStandards(): Observable<IStandard[]> {
+  getStandards(): Observable<ReadyToRunDTOs.IStandard[]> {
     if (this.standards) {
       return of(this.standards);
     }
 
-    return this.http.get<IStandard[]>(this.standardsUrl)
+    return this.http.get<ReadyToRunDTOs.IStandard[]>(this.standardsUrl)
         .pipe(
           tap(data => console.log('All Standards', JSON.stringify(data))),
           tap(data => this.standards = data),
@@ -33,7 +33,7 @@ export class StandardService {
         );
   }
 
-  getStandard(id: number): Observable<IStandard> {
+  getStandard(id: number): Observable<ReadyToRunDTOs.IStandard> {
     if (this.standards) {
       const foundItem = this.standards.find(item => item.id === id);
       if (foundItem) {
@@ -42,7 +42,7 @@ export class StandardService {
     }
 
     const url = `${this.standardsUrl}/${id}`;
-    return this.http.get<IStandard>(url)
+    return this.http.get<ReadyToRunDTOs.IStandard>(url)
       .pipe(
         tap(data => console.log('getStandard: ' + JSON.stringify(data))),
         catchError(this.handleError)

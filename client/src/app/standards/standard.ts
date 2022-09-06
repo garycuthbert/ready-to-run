@@ -1,11 +1,6 @@
-export interface IStandard {
-  id: number;
-  number: number;
-  title: string;
-  question?: string;
-}
+import {ReadyToRunDTOs} from "@shared/model/ReadyToRunDTOs";
 
-export const AllStandardsStandard: IStandard = {
+export const AllStandardsStandard: ReadyToRunDTOs.IStandard = {
   id: -1,
   number: 0,
   title: "All",

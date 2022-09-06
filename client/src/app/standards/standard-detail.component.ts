@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { EMPTY, Subscription } from 'rxjs';
 import { NavigationHistoryService } from '../shared/navigation-history.service';
-import { IStandard } from './standard';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 import { StandardService } from './standard.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { StandardService } from './standard.service';
 })
 export class StandardDetailComponent implements OnInit {
   pageTitle: string = 'Standard: ';
-  standard!: IStandard | null;
+  standard!: ReadyToRunDTOs.IStandard | null;
   errorMessage: string = '';
 
   constructor(private standardService: StandardService,
@@ -39,7 +39,7 @@ export class StandardDetailComponent implements OnInit {
     });
   }
 
-  onStandardRetrieved(standard: IStandard): void {
+  onStandardRetrieved(standard: ReadyToRunDTOs.IStandard): void {
     this.standard = standard;
 
     if (this.standard) {
