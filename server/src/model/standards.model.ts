@@ -4,11 +4,11 @@ import {ReadyToRunDTOs} from "@shared/model/ReadyToRunDTOs";
 import standardsJSON from '../assets/mock/standards/standards.json';
 
 export class Standards {
-    private standards = standardsJSON as ReadyToRunDTOs.IAllStandards;
+    private standards = <ReadyToRunDTOs.IAllStandards>standardsJSON;
 
     constructor() {}
 
-    public getAllStandards(): any {
+    public getAllStandards(): ReadyToRunDTOs.IAllStandards {
         return this.standards;
     }
 }

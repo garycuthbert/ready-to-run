@@ -23,7 +23,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(FakedData),
+    //HttpClientInMemoryWebApiModule.forRoot(FakedData),
     UserModule,
     StandardsModule,
     ExerciseModule,
