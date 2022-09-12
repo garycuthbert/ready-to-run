@@ -42,6 +42,24 @@ class Server {
         // Must do this as the first express middleware function
         //this.app.use(compression());
 
+        this.app.use((req: any, res: any, next: any) => {
+            // Website that we wish to allow to connect
+            res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+            // Request methods we wish to allow
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+            // Request header we wish to allow
+            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+            // Pass true if we need the website to include cookies in the requests sent to the API
+            // (e.g. In case we use sessions)
+            res.setHeader('Access-Control-Allow-Credentials', true);
+
+            // Pass to the next layer of middleware
+            next();
+        });
+
         // Parse incoming requests with JSON payloads
         this.app.use(express.json());
 
@@ -52,10 +70,11 @@ class Server {
         // This is the default used by the SNE instrument.
         // The development server will have cache disabled.
         // See https://web.dev/codelab-http-cache/
-        // this.app.use(express.static(this.clientDist, {
-        //     etag: true,                           // Explicit default
-        //     lastModified: true,                   // Explicit default
-        // }));
+        this.app.use(express.static(this.clientDist, {
+             etag: true,                           // Explicit default
+             lastModified: true,                   // Explicit default
+        }));
+        
 
         const standards = new Standards();
 
@@ -65,7 +84,7 @@ class Server {
         *********************************************/
 
         this.app.get('/webui/standards', (req: any, res: any) => {
-            const response = standards.getAllStandards();
+            const response = standards.getAllStandards();            
             return res.json(response);
         });
 
