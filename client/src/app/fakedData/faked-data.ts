@@ -1,7 +1,5 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
-import { IExercise } from '../exercises/exercise';
-import { IStep } from '../step/step';
 
 export class FakedData implements InMemoryDbService {
   createDb() {
@@ -82,7 +80,7 @@ export class FakedData implements InMemoryDbService {
       }
     ];
 
-    const exercises: IExercise[] = [
+    const exercises: ReadyToRunDTOs.IExercise[] = [
       {
         id: 1,
         title: 'Basic Squat',
@@ -104,7 +102,7 @@ export class FakedData implements InMemoryDbService {
       }
     ];
 
-    const steps: IStep[] = [
+    const steps: ReadyToRunDTOs.IStep[] = [
       {
         id: 1,
         imagePath: '/assets/images/couchStretch/step1.png',
