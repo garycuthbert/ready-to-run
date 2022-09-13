@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, EMPTY, Observable, of } from "rxjs";
 import { ReadyToRunDTOs } from "@shared/model/ReadyToRunDTOs";
 
 @Injectable({
@@ -35,6 +35,23 @@ export class StandardsService {
 
   changeSelectedStandard(selectedStandard: ReadyToRunDTOs.IStandard | null) : void {
     this._selectedStandardSource.next(selectedStandard);
+  }
+
+  getStandard(id: number): Observable<ReadyToRunDTOs.IStandard> {
+    if (this.standardsStore.standards) {
+      const foundItem = this.standardsStore.standards.find(item => item.id === id);
+      if (foundItem) {
+        return of(foundItem);
+      }
+    }
+
+    const url = `${this.standardsUrl}/${id}`;
+    /*return this.http.get<ReadyToRunDTOs.IStandard>(url)
+      .pipe(
+        tap(data => console.log('getStandard: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );*/
+    return EMPTY;
   }
 
   private initialiseStandardsData(allStandards: ReadyToRunDTOs.IAllStandards) {

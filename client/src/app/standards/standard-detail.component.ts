@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { EMPTY, Subscription } from 'rxjs';
 import { NavigationHistoryService } from '../shared/navigation-history.service';
 import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
-import { StandardService } from './standard.service';
+import { StandardsService } from 'app/services/standards.service';
 
 @Component({
   selector: 'rtr-standard-detail',
@@ -15,7 +14,7 @@ export class StandardDetailComponent implements OnInit {
   standard!: ReadyToRunDTOs.IStandard | null;
   errorMessage: string = '';
 
-  constructor(private standardService: StandardService,
+  constructor(private standardsService: StandardsService,
               private navigationService: NavigationHistoryService,
               private route: ActivatedRoute) { }
 
@@ -33,7 +32,7 @@ export class StandardDetailComponent implements OnInit {
   }
 
   getStandard(id: number): void {
-    this.standardService.getStandard(id).subscribe({
+    this.standardsService.getStandard(id).subscribe({
       next: standard => this.onStandardRetrieved(standard),
       error: err => this.errorMessage = err
     });
