@@ -7,7 +7,24 @@ export namespace ReadyToRunDTOs {
     question?: string;
   }
 
+  interface IStep {
+    id: number;
+    imagePath?: string;
+    paragraphs: string[];
+  }
+
+  interface IExercise {
+    id: number;
+    title: string;
+    introduction?: string;
+    steps: IStep[];
+  }
+
   interface IAllStandards {
     standards: (ReadyToRunDTOs.IStandard[] | null);
+  }
+
+  interface IAllExercises {
+    exercises: (ReadyToRunDTOs.IExercise[] | null);
   }
 }
