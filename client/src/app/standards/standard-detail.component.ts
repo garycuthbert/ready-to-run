@@ -21,14 +21,7 @@ export class StandardDetailComponent implements OnInit {
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id');
     let id = param ? +param:0;
-    //let id = +this.route?.snapshot?.paramMap.get('id');
-    //if (null == id)
-//      id = 0;
-
     this.getStandard(id);
-    // this.sub = this.standardService.selectedStandardChanges$.subscribe(
-    //   selectedStandard => this.standard = selectedStandard
-    // );
   }
 
   getStandard(id: number): void {
