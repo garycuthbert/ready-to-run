@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IStep } from './step';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Component({
   selector: 'rtr-step',
@@ -9,7 +9,7 @@ import { IStep } from './step';
 export class StepComponent implements OnInit {
 
   missing: string = "Step Component has no step data to display!";
-  @Input() step!: IStep;
+  @Input() step!: ReadyToRunDTOs.IStep;
 
   imagePath: string = '/assets/images/couchStretch/step5.png';
   constructor() { }

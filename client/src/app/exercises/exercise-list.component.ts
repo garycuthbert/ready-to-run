@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AllStandardsStandard } from '../standards/standard';
 import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
-import { StandardService } from '../standards/standard.service';
-import { ExerciseService } from './exercise.service';
+import { StandardsService } from 'app/services/standards.service';
+//import { ExerciseService } from './exercise.service';
+import { ExercisesService } from 'app/services/exercises.service';
 
 @Component({
   selector: 'rtr-exercise-list',
@@ -14,24 +15,28 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   errorMessage!: string;
   standards: ReadyToRunDTOs.IStandard[] = [ AllStandardsStandard ];
   selectedStandard!: ReadyToRunDTOs.IStandard | null;
-  sub!: Subscription;
+  subscriptions$: Subscription = new Subscription();
   //excerises: IExercise[] | undefined;
 
-  constructor(private standardService: StandardService,
-              private exerciseService: ExerciseService) { }
+  constructor(private standardsService: StandardsService,
+              private exercisesService: ExercisesService) { }
 
   ngOnInit(): void {
-
-    this.sub = this.standardService.selectedStandardChanges$.subscribe(
-      selectedStandard => this.selectedStandard = selectedStandard
+    this.subscriptions$.add(
+      this.standardsService.selectedStandard.subscribe(
+        (standard) => {
+          this.selectedStandard = standard;
+        })
     );
 
-    this.standardService.getStandards().subscribe({
-      next: (standards: ReadyToRunDTOs.IStandard[]) => {
-        this.standards = this.standards.concat(standards);
-      },
-      error: err => this.errorMessage = err
-    });
+    this.subscriptions$.add(
+      this.standardsService.standards.subscribe({
+        next: (standards: ReadyToRunDTOs.IStandard[] | null) => {
+          this.standards = this.standards.concat(standards ?? []);
+        },
+        error: (err : any) => this.errorMessage = err
+      })
+    );
   }
 
   onSelected(standard: ReadyToRunDTOs.IStandard) : void {
@@ -40,7 +45,7 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
       this.selectedStandard = standard;
     }
     else {
-      this.standardService.changeSelectedStandard(standard);
+      this.standardsService.changeSelectedStandard(standard);
     }
   }
 
@@ -61,6 +66,6 @@ export class ExerciseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.subscriptions$.unsubscribe();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavigationHistoryService } from '../shared/navigation-history.service';
-import { IExercise } from './exercise';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Component({
   selector: 'rtr-exercise-detail',
@@ -10,7 +10,7 @@ import { IExercise } from './exercise';
 })
 export class ExerciseDetailComponent implements OnInit {
 
-  exercise: IExercise = {
+  exercise: ReadyToRunDTOs.IExercise = {
     id: 1,
     title: 'Couch Stretch',
     introduction: "The couch stretch is a weapons-grade technique to "+

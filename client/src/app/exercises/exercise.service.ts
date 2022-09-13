@@ -2,23 +2,23 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { IExercise } from './exercise';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExerciseService {
   private exerciseUrl = 'api/exercises';
-  private exercises: IExercise[] | undefined;
+  private exercises: ReadyToRunDTOs.IExercise[] | undefined;
 
   constructor(private http: HttpClient) { }
 
-  getExercises(): Observable<IExercise[]> {
+  getExercises(): Observable<ReadyToRunDTOs.IExercise[]> {
     if (this.exercises) {
       return of(this.exercises);
     }
 
-    return this.http.get<IExercise[]>(this.exerciseUrl)
+    return this.http.get<ReadyToRunDTOs.IExercise[]>(this.exerciseUrl)
       .pipe(
         tap(data => console.log('All Excercises', JSON.stringify(data))),
         tap(data => this.exercises = data),

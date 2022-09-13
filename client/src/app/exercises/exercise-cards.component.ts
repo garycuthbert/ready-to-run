@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationHistoryService } from '../shared/navigation-history.service';
-import { IExercise } from './exercise';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Component({
   selector: 'rtr-exercise-cards',
@@ -8,7 +8,7 @@ import { IExercise } from './exercise';
   styleUrls: ['./exercise-cards.component.css']
 })
 export class ExerciseCardsComponent implements OnInit {
-  exercises: IExercise[] = [
+  exercises: ReadyToRunDTOs.IExercise[] = [
     {
       id: 1,
       title: 'Basic Squat',

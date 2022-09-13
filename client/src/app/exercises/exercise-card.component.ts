@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IExercise } from './exercise';
+import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 
 @Component({
   selector: 'rtr-exercise-card',
@@ -7,7 +7,7 @@ import { IExercise } from './exercise';
   styleUrls: ['./exercise-card.component.css']
 })
 export class ExerciseCardComponent implements OnInit {
-  @Input() exercise: IExercise | undefined;
+  @Input() exercise: ReadyToRunDTOs.IExercise | undefined;
 
   constructor() { }
 
