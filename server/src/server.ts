@@ -8,7 +8,8 @@ import express from 'express';
 import http from "http";
 
 import path from "path";
-import { Standards } from './model/standards.model';
+import { StandardsModel } from './model/standards.model';
+import { ExercisesModel } from './model/exercises.model';
 //import compression from 'compression';
 
 class Server {
@@ -76,7 +77,8 @@ class Server {
         }));
         
 
-        const standards = new Standards();
+        const standards = new StandardsModel();
+        const exercises = new ExercisesModel();
 
         /*********************************************
         * Any specific get handlers go here before the
@@ -85,6 +87,21 @@ class Server {
 
         this.app.get('/webui/standards', (req: any, res: any) => {
             const response = standards.getAllStandards();            
+            return res.json(response);
+        });
+
+        this.app.get('/webui/standards/:id', (req: any, res: any) => {
+            const response = standards.getStandard(Number(req.params.id)); 
+            return res.json(response);
+        });
+
+        this.app.get('/webui/exercises', (req: any, res: any) => {
+            const response = exercises.getAllExercises();
+            return res.json(response);
+        });
+
+        this.app.get('/webui/exercises/:id', (req: any, res: any) => {
+            const response = exercises.getExercise(Number(req.params.id));
             return res.json(response);
         });
 
