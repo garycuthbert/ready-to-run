@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { MenuComponent } from './home/menu.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakedData } from './fakedData/faked-data';
 import { UserModule } from './user/user.module';
 import { StandardsModule } from './standards/standards.module';
 import { ExerciseModule } from './exercises/exercise.module';
@@ -23,7 +20,6 @@ import { PageNotFoundComponent } from './page-not-found.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    //HttpClientInMemoryWebApiModule.forRoot(FakedData),
     UserModule,
     StandardsModule,
     ExerciseModule,
