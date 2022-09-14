@@ -20,6 +20,11 @@ export namespace ReadyToRunDTOs {
     steps: IStep[];
   }
 
+  interface IExerciseSteps {
+    exerciseId: number;
+    stepIds: number[];
+  }
+  
   interface IAllStandards {
     standards: (ReadyToRunDTOs.IStandard[] | null);
   }

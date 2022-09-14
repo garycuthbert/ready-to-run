@@ -10,6 +10,7 @@ import http from "http";
 import path from "path";
 import { StandardsModel } from './model/standards.model';
 import { ExercisesModel } from './model/exercises.model';
+import { ExerciseStepsModel } from './model/exercise-steps.model';
 //import compression from 'compression';
 
 class Server {
@@ -79,6 +80,7 @@ class Server {
 
         const standards = new StandardsModel();
         const exercises = new ExercisesModel();
+        const exerciseSteps = new ExerciseStepsModel();
 
         /*********************************************
         * Any specific get handlers go here before the
@@ -102,6 +104,11 @@ class Server {
 
         this.app.get('/webui/exercises/:id', (req: any, res: any) => {
             const response = exercises.getExercise(Number(req.params.id));
+            return res.json(response);
+        });
+
+        this.app.get('/webui/exercisesteps/:exerciseid', (req: any, res: any) => {
+            const response = exerciseSteps.getExerciseSteps(Number(req.params.exerciseid));
             return res.json(response);
         });
 
