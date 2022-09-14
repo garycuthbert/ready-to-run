@@ -1,8 +1,14 @@
-{
-    "exerciseSteps": [
-        {
-          "exerciseId": 1,
-          "stepIds": [1, 2, 3, 4, 5, 6]
-        }
-    ]
-}
+[
+  {
+    "exerciseId": 1,
+    "stepIds": [1, 2, 3, 4, 5, 6]
+  },
+  {
+    "exerciseId": 2,
+    "stepIds": [1, 2]
+  },
+  {
+    "exerciseId": 3,
+    "stepIds": [5, 6]
+  }
+]
