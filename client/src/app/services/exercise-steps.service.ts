@@ -1,11 +1,11 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError, EMPTY, Observable, tap } from "rxjs";
 
 import { ReadyToRunDTOs } from "@shared/model/ReadyToRunDTOs";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class ExerciseStepsService {
   private readonly exerciseStepsBaseUrl = 'webui/exercisesteps';
