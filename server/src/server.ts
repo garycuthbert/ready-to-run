@@ -10,6 +10,7 @@ import http from "http";
 import path from "path";
 import { StandardsModel } from './model/standards.model';
 import { ExercisesModel } from './model/exercises.model';
+import { StepsModel } from './model/steps.model';
 import { ExerciseStepsModel } from './model/exercise-steps.model';
 //import compression from 'compression';
 
@@ -80,6 +81,7 @@ class Server {
 
         const standards = new StandardsModel();
         const exercises = new ExercisesModel();
+        const steps = new StepsModel();
         const exerciseSteps = new ExerciseStepsModel();
 
         /*********************************************
@@ -106,6 +108,23 @@ class Server {
             const response = exercises.getExercise(Number(req.params.id));
             return res.json(response);
         });
+
+        this.app.get('/webui/steps/:stepids', (req: any, res: any) => {
+            const ids: number[] = [];
+
+            console.log('server.ts : getSteps: stepids query param = ', req.params.stepids);
+            for (let step of req.params.stepids) {
+                let id = Number(step);
+                if (!Number.isNaN(id)) {
+                    ids.push(id);
+                }
+            }
+            console.log('server.ts : getSteps: parsed ids = ', ids);
+            //req?.params?.stepids?.forEach(id => ids.push(Number(id)));
+
+            const response = steps.getSteps(ids);
+            return res.json(response);
+        });        
 
         this.app.get('/webui/exercisesteps/:exerciseid', (req: any, res: any) => {
             const response = exerciseSteps.getExerciseSteps(Number(req.params.exerciseid));

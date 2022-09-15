@@ -4,6 +4,7 @@ import { NavigationHistoryService } from '../shared/navigation-history.service';
 import { ReadyToRunDTOs } from '@shared/model/ReadyToRunDTOs';
 import { ExerciseStepsService } from 'app/services/exercise-steps.service';
 import { Subscription } from 'rxjs';
+import { StepsService } from 'app/services/steps.service';
 
 @Component({
   selector: 'rtr-exercise-detail',
@@ -81,7 +82,8 @@ export class ExerciseDetailComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private navHistory: NavigationHistoryService,
-    private exerciseStepsService: ExerciseStepsService
+    private exerciseStepsService: ExerciseStepsService,
+    private stepsService: StepsService
     ) {
     console.log('ExerciseDetailComponent constructed!');
   }
@@ -96,6 +98,7 @@ export class ExerciseDetailComponent implements OnInit, OnDestroy {
         (steps) => {
           this.exerciseSteps = steps;
           console.log('exercisSteps = ', steps);
+          this.stepsService.getSteps(this.exerciseSteps.stepIds).subscribe(steps => console.log('Steps Recevied! ', steps))
         }
       )
     );
