@@ -79,10 +79,10 @@ class Server {
         }));
         
 
-        const standards = new StandardsModel();
-        const exercises = new ExercisesModel();
+        const standards = new StandardsModel();        
         const steps = new StepsModel();
         const exerciseSteps = new ExerciseStepsModel();
+        const exercises = new ExercisesModel(exerciseSteps, steps);
 
         /*********************************************
         * Any specific get handlers go here before the
@@ -104,8 +104,13 @@ class Server {
             return res.json(response);
         });
 
-        this.app.get('/webui/exercises/:id', (req: any, res: any) => {
-            const response = exercises.getExercise(Number(req.params.id));
+        this.app.get('/webui/exercise/summary/:id', (req: any, res: any) => {
+            const response = exercises.getExerciseSummary(Number(req.params.id));
+            return res.json(response);
+        });
+
+        this.app.get('/webui/exercise/detail/:id', (req: any, res: any) => {
+            const response = exercises.getExerciseDetail(Number(req.params.id));
             return res.json(response);
         });
 
