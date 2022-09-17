@@ -1,18 +1,18 @@
 <div class="card">
   <div class="card-header" fxLayout="row" fxLayoutAlign="space-between center">
-    <div>{{ exercise.title }}</div>
+    <div>{{ exercise?.title }}</div>
     <div><a class="btn btn-primary" (click)="onBack()">Back</a></div>
   </div>
   <div class="card-body">
     <div class="row">
-      <div *ngIf="exercise.introduction">
-        <p>{{ exercise.introduction }}</p>
+      <div *ngIf="exercise?.introduction">
+        <p>{{ exercise?.introduction }}</p>
       </div>
-      <div class="row" *ngIf="exercise.steps.length">
+      <div class="row" *ngIf="exercise?.steps?.length">
         <div class="accordion" [id]="accordionId()">
           <div
             class="accordion-item"
-            *ngFor="let step of exercise.steps; let i = index"
+            *ngFor="let step of exercise?.steps; let i = index"
           >
             <h2 class="accordion-header" [id]="'headingStep' + (i + 1)">
               <button
