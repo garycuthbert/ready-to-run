@@ -1,0 +1,16 @@
+<div fxLayout="row" class="mat-simple-snackbar" *ngIf="data?.icon==='info' || data?.icon==='warning' then infotemplate;else icontemplate"></div>
+
+<ng-template #infotemplate>
+  <ng-container *ngTemplateOutlet="info"></ng-container>
+  <ng-container *ngTemplateOutlet="message"></ng-container>
+</ng-template>
+
+<ng-template #icontemplate>
+  <ng-container *ngTemplateOutlet="message"></ng-container>
+  <ng-container *ngTemplateOutlet="closebutton"></ng-container>
+</ng-template>
+
+
+<ng-template #info>
+  <mat-icon fxFlex="1 1 auto">{{ data?.icon }}</mat-icon>
+</ng-template>

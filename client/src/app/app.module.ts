@@ -10,13 +10,18 @@ import { StandardsModule } from './standards/standards.module';
 import { ExerciseModule } from './exercises/exercise.module';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { GlobalErrorHandler } from './services/error-handling/global-error-handler';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomSnackbarComponent } from './core/components/custom-snackbar/custom-snackbar.component';
+
+import { MaterialModule } from '@shared/material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     WelcomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    CustomSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +29,9 @@ import { GlobalErrorHandler } from './services/error-handling/global-error-handl
     UserModule,
     StandardsModule,
     ExerciseModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandler }
