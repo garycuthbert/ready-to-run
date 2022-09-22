@@ -10,6 +10,17 @@
   <ng-container *ngTemplateOutlet="closebutton"></ng-container>
 </ng-template>
 
+<ng-template #message>
+  <div fxFlex="5 1 auto" fxFlexAlign="center" style="white-space: pre-line">
+    {{ data?.message | slice:0:textLimit}}{{ data?.message.length > textLimit ? '...' : ''}}
+  </div>
+</ng-template>
+
+<ng-template #closebutton>
+  <button mat-icon-button fxFlex="1 1 auto" (click)="onDismiss()">
+    <mat-icon [inline]="true">{{ data?.icon }}</mat-icon>
+  </button>
+</ng-template>
 
 <ng-template #info>
   <mat-icon fxFlex="1 1 auto">{{ data?.icon }}</mat-icon>

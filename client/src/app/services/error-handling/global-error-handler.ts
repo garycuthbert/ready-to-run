@@ -2,6 +2,7 @@ import { ErrorHandler, Injectable, Injector } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
 
 import { ErrorService } from "./error.service";
+import { NotificationService } from "./notification.service";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class GlobalErrorHandler implements ErrorHandler{
     // cannot use constructor injection for the services so we
     // inject them manually with Injector.
     const errorService = this.injector.get(ErrorService);
+    const notifier = this.injector.get(NotificationService);
 
     let message: string;
     let stackTrace: string;
@@ -37,12 +39,15 @@ export class GlobalErrorHandler implements ErrorHandler{
 
     if (error instanceof HttpErrorResponse) {
       message = errorService.getServerErrorMessage(error);
+      notifier.warn(message);
     } else {
       message = errorService.getClientErrorMessage(error);
       if (this.isNewError(message)) {
         stackTrace = errorService.getClientErrorStackTrace(error);
+        notifier.error(message);
       } else {
         message = 'Suppressing duplicate errors: ' + message;
+        notifier.error(message);
       }
     }
   }

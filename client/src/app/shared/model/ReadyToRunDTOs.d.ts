@@ -1,5 +1,12 @@
 export namespace ReadyToRunDTOs {
 
+  // This interface should be a member of everything returned from a server api call
+  // so we can assess the success or failure of the call
+  interface IInternalStatus {
+    code: number;
+    message: string;
+  }
+
   interface IStandard {
     id: number;
     number: number;
@@ -24,7 +31,7 @@ export namespace ReadyToRunDTOs {
     exerciseId: number;
     stepIds: number[];
   }
-  
+
   interface IAllStandards {
     standards: (ReadyToRunDTOs.IStandard[] | null);
   }
