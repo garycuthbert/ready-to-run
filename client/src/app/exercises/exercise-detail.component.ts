@@ -44,6 +44,7 @@ export class ExerciseDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription$.unsubscribe();
+    //throw Error('You cannot destroy me!');
   }
 
   accordionId(): string {

@@ -26,7 +26,8 @@ export class ExercisesModel {
     public getExerciseDetail(id: number) : ReadyToRunDTOs.IExercise | null {
         let exercise = this.getExerciseSummary(id);
         if (exercise == null) {
-            return exercise; // invalid id passed
+            throw Error('Exercise id \'' + id + '\' is invalid!');
+            //return exercise; // invalid id passed
         }
 
         const stepsLookup = this.exerciseSteps.getExerciseSteps(id);

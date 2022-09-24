@@ -110,7 +110,15 @@ class Server {
         });
 
         this.app.get('/webui/exercise/detail/:id', (req: any, res: any) => {
-            const response = exercises.getExerciseDetail(Number(req.params.id));
+            let response = null;            
+            
+            response = exercises.getExerciseDetail(Number(req.params.id));
+                        
+            // we can examine the response for server status details and decide if we are in error
+            // and raise an error here
+            //if (Number(req.params.id) == 99) {
+                //throw Error('No not 99!');
+            //}
             return res.json(response);
         });
 
@@ -136,10 +144,35 @@ class Server {
             return res.json(response);
         });
 
+        // Setup error handling
+        this.app.use(this.errorLogger);
+        this.app.use(this.errorResponder);
+        this.app.use(this.failSafeHandler);
+
+
         const port = process.env.port || this.port;
         this.httpServer.listen(port, () => {
             console.log(`Server started on port ${port}`);
         });        
+    }
+
+    private errorLogger(error: any, req: any, res: any, next: any) { // for logging errors
+        console.error(error) // or using any fancy logging library
+        next(error) // forward to next middleware
+    }
+
+    private errorResponder(error: any, req: any, res: any, next: any) { // responding to client
+        if (error.type == 'redirect')
+            res.redirect('/error')
+        else if (error.type == 'time-out') // arbitrary condition check
+            res.status(408).send(error)
+        else
+            next(error) // forwarding exceptional case to fail-safe middleware
+    }
+
+    private failSafeHandler(error: any, req: any, res: any, next: any) { // generic handler
+        res.status(500)//.send(error);
+        .json(JSON.stringify({error: error})).send(error);
     }
 
     // Create an instance of this server class

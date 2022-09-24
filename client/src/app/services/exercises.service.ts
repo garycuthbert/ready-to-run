@@ -23,9 +23,8 @@ export class ExercisesService {
     exercises: [],
   };
 
-  private _exercises: BehaviorSubject<ReadyToRunDTOs.IExercise[] | null> = <
-    BehaviorSubject<ReadyToRunDTOs.IExercise[] | null>
-  >new BehaviorSubject(null);
+  private _exercises: BehaviorSubject<ReadyToRunDTOs.IExercise[] | null> =
+    <BehaviorSubject<ReadyToRunDTOs.IExercise[] | null>>new BehaviorSubject(null);
   get exercises() {
     return this._exercises.asObservable();
   }
@@ -56,9 +55,10 @@ export class ExercisesService {
 
     const url = `${this.exerciseBaseUrl}/summary/${id}`;
     return this.http.get<ReadyToRunDTOs.IExercise>(url).pipe(
-      tap((data) => console.log('getExerciseSummary: ' + JSON.stringify(data)))
-      //catchError(this.handleError)
-    );
+      tap((data) => {
+        // presumably we could interrogte the response here and raise an error if the server status was not good?
+        console.log('getExerciseSummary: ' + JSON.stringify(data));
+      }));
   }
 
   /**
@@ -75,8 +75,7 @@ export class ExercisesService {
     const url = `${this.exerciseBaseUrl}/detail/${id}`;
 
     return this.http.get<ReadyToRunDTOs.IExercise>(url).pipe(
-      tap((data) => console.log('getExerciseDetail: ' + JSON.stringify(data))),
-      catchError(this.handleError)
+      tap((data) => console.log('getExerciseDetail: ' + JSON.stringify(data)))
     );
   }
 
@@ -139,7 +138,7 @@ export class ExercisesService {
     this.publishAllExercises();
   }
 
-  private handleError(err: HttpErrorResponse) {
+  /*private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
     let errorMessage: string;
@@ -155,7 +154,7 @@ export class ExercisesService {
     console.error(errorMessage);
 
     return EMPTY;
-  }
+  }*/
 
   /// Event publishing
   private publishAllExercises() {
