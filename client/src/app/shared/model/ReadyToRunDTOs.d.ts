@@ -39,4 +39,9 @@ export namespace ReadyToRunDTOs {
   interface IAllExercises {
     exercises: (ReadyToRunDTOs.IExercise[] | null);
   }
+
+  interface IAllExercisesDTO {
+    status: IInternalStatus;
+    exercises: (ReadyToRunDTOs.IExercise[] | null);
+  }
 }

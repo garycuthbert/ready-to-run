@@ -2,12 +2,20 @@ import { ReadyToRunDTOs } from "@shared/model/ReadyToRunDTOs";
 
 // App imports
 import exercisesJSON from '../assets/mock/exercises.json';
-import stepsJSON from '../assets/mock/steps.json';
 import { ExerciseStepsModel } from "./exercise-steps.model";
 import { StepsModel } from "./steps.model";
 
 export class ExercisesModel {
-    private exercises = <ReadyToRunDTOs.IAllExercises>exercisesJSON;
+    private exercises = <ReadyToRunDTOs.IExercise[]>exercisesJSON;
+
+    private success : ReadyToRunDTOs.IInternalStatus = {
+        code: 200,
+        message: ''
+    };
+    private error : ReadyToRunDTOs.IInternalStatus = {
+        code: 501,
+        message: 'An Error!'
+    };
 
     constructor(
         private exerciseSteps : ExerciseStepsModel,
@@ -15,11 +23,25 @@ export class ExercisesModel {
     ) {}
 
     public getAllExercises() {
-        return this.exercises;
+        const dto: ReadyToRunDTOs.IAllExercisesDTO = { 
+            status: this.success,
+            exercises: this.exercises 
+        }
+
+        return dto;
+    }
+
+    public getAllExercisesIPromise() : Promise<ReadyToRunDTOs.IExercise[]> {
+        const ret = new Promise<ReadyToRunDTOs.IExercise[]>((resolve, reject) => {
+            //resolve(this.exercises);
+            reject(this.error);
+        });
+
+        return ret;
     }
 
     public getExerciseSummary(id: number): ReadyToRunDTOs.IExercise | null {
-        const exercise = this.exercises.exercises?.find(e => e.id === id);
+        const exercise = this.exercises?.find(e => e.id === id);
         return exercise ?? null;
     }
 

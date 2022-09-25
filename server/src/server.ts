@@ -12,6 +12,7 @@ import { StandardsModel } from './model/standards.model';
 import { ExercisesModel } from './model/exercises.model';
 import { StepsModel } from './model/steps.model';
 import { ExerciseStepsModel } from './model/exercise-steps.model';
+import { nextTick } from 'process';
 //import compression from 'compression';
 
 class Server {
@@ -99,9 +100,21 @@ class Server {
             return res.json(response);
         });
 
-        this.app.get('/webui/exercises', (req: any, res: any) => {
-            const response = exercises.getAllExercises();
-            return res.json(response);
+        this.app.get('/webui/exercises', (req: any, res: any, next: any) => {
+            // const response = exercises.getAllExercises();
+            // console.log('/webui/exercises/ : ', response);
+            // if (response.status.code !== 200) {
+            //     throw new Error('status: \'' + response.status.code + '\', message: \'' + response.status.message + '\'.');
+            // }
+            // return res.json(response.exercises);
+            exercises.getAllExercisesIPromise()
+                .then(data => {
+                    console.log('getAllExercisesIPromise: then!', data);
+                    return res.json(data);
+                })
+                .catch(err => {console.error('getAllExercisesIPromise: error!'); next(err); })
+                .finally(() => { console.log('getAllExercisesIPromise: finally!'); });
+                //.catch(err => {next(err);});
         });
 
         this.app.get('/webui/exercise/summary/:id', (req: any, res: any) => {
