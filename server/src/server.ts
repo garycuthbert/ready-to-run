@@ -12,8 +12,7 @@ import { StandardsModel } from './model/standards.model';
 import { ExercisesModel } from './model/exercises.model';
 import { StepsModel } from './model/steps.model';
 import { ExerciseStepsModel } from './model/exercise-steps.model';
-import { nextTick } from 'process';
-//import compression from 'compression';
+import { ReadyToRunDTOs } from "@shared/model/ReadyToRunDTOs";
 
 class Server {
     public app: any;
@@ -91,7 +90,8 @@ class Server {
         *********************************************/
 
         this.app.get('/webui/standards', (req: any, res: any) => {
-            const response = standards.getAllStandards();            
+            const response = standards.getAllStandards();       
+            console.log('standards returning response.standards = ', response.standards);
             return res.json(response);
         });
 
@@ -101,20 +101,17 @@ class Server {
         });
 
         this.app.get('/webui/exercises', (req: any, res: any, next: any) => {
-            // const response = exercises.getAllExercises();
-            // console.log('/webui/exercises/ : ', response);
-            // if (response.status.code !== 200) {
-            //     throw new Error('status: \'' + response.status.code + '\', message: \'' + response.status.message + '\'.');
-            // }
-            // return res.json(response.exercises);
-            exercises.getAllExercisesIPromise()
+            // Out api service code will return a promise so we can catch any error it may raise and 
+            // pass it on to the express error handling
+            exercises.getAllExercises()
                 .then(data => {
-                    console.log('getAllExercisesIPromise: then!', data);
+                    // Success, return the data
                     return res.json(data);
                 })
-                .catch(err => {console.error('getAllExercisesIPromise: error!'); next(err); })
-                .finally(() => { console.log('getAllExercisesIPromise: finally!'); });
-                //.catch(err => {next(err);});
+                .catch(err => {
+                    // promise was rejected, pass error onto error handler
+                    next(err); 
+                });            
         });
 
         this.app.get('/webui/exercise/summary/:id', (req: any, res: any) => {
@@ -174,13 +171,40 @@ class Server {
         next(error) // forward to next middleware
     }
 
-    private errorResponder(error: any, req: any, res: any, next: any) { // responding to client
-        if (error.type == 'redirect')
-            res.redirect('/error')
-        else if (error.type == 'time-out') // arbitrary condition check
-            res.status(408).send(error)
-        else
-            next(error) // forwarding exceptional case to fail-safe middleware
+    private errorResponder(error: ReadyToRunDTOs.IInternalStatus, req: any, res: any, next: any) { 
+
+        // If using IInternalStatus (we should be from the internal API service responder code)
+        // we may have an error type to influence how the error should be handled
+        if (error?.type) {
+            switch (error.type) {
+                case "Redirect":
+                    // We may need another strategy here to pass context to the redired, we could pass details is as url parameters 
+                    // or perhaps define a handler here for /error and parse the request for error information, it should be IInternalStatus
+                    res.redirect('/error');
+                    break;
+
+                case "Timeout":
+                    res.status(408).send(error);
+                    break;
+
+                // case "blah": // typechecking against exported string type ofr 'type'
+                //     break;
+
+                case "UseCode":
+                    // The intention of this is to set the http status code to the value 
+                    // we have placed in our error object.
+                    res.status(error.code).send(error);
+                    break;
+                    
+                default:
+                    // Just use the default handling, this will set http response code of 500
+                    next(error);
+            }
+        }
+        else {
+            // forwarding exceptional case to fail-safe middleware
+            next(error);
+        }        
     }
 
     private failSafeHandler(error: any, req: any, res: any, next: any) { // generic handler

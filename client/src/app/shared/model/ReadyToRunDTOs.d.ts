@@ -1,9 +1,10 @@
 export namespace ReadyToRunDTOs {
 
-  // This interface should be a member of everything returned from a server api call
-  // so we can assess the success or failure of the call
+  export type InternalErrorDirectionType = "None" | 'UseCode' | 'Redirect' | 'Timeout';
+
   interface IInternalStatus {
     code: number;
+    type?: InternalErrorDirectionType;
     message: string;
   }
 
@@ -40,8 +41,8 @@ export namespace ReadyToRunDTOs {
     exercises: (ReadyToRunDTOs.IExercise[] | null);
   }
 
-  interface IAllExercisesDTO {
-    status: IInternalStatus;
-    exercises: (ReadyToRunDTOs.IExercise[] | null);
-  }
+  // interface IAllExercisesDTO {
+  //   status: IInternalStatus;
+  //   exercises: (ReadyToRunDTOs.IExercise[] | null);
+  // }
 }
