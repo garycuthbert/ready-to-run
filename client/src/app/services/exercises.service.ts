@@ -37,7 +37,7 @@ export class ExercisesService {
     // Fetch initial data from the server, process it to set up the main store.
     // subscription$ combine latest here to accept steps from seperate call?
     this.http
-      .get<ReadyToRunDTOs.IAllExercises>(this.exercisesSummaryUrl)
+      .get<ReadyToRunDTOs.IExercise[]>(this.exercisesSummaryUrl)
       .subscribe((allExercises) => {
         this.initialiseExercisesData(allExercises);
       });
@@ -121,18 +121,18 @@ export class ExercisesService {
     );
   }
 
-  private initialiseExercisesData(allExercises: ReadyToRunDTOs.IAllExercises) {
+  private initialiseExercisesData(allExercises: ReadyToRunDTOs.IExercise[]) {
     console.log(
       'initaliseExercisesData : processing allExercies = ',
       allExercises
     );
-    if (allExercises == null || allExercises.exercises == null) {
+    if (allExercises == null || allExercises?.length <= 0) {
       return;
     }
 
     // TODO - look at deepCopy
     this.exerciseStore.exercises = JSON.parse(
-      JSON.stringify(allExercises.exercises)
+      JSON.stringify(allExercises)
     );
 
     this.publishAllExercises();

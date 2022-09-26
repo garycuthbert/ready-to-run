@@ -26,7 +26,7 @@ export class ExerciseCardsComponent implements OnInit, OnDestroy {
     this.subscriptions$.add(
       this.excerciseService.exercises.subscribe(
         exercises => {
-          //console.log('ngOnInit subscribe! got exercises', this.exerciseList);
+          console.log('ngOnInit subscribe! got exercises', this.exerciseList);
           if (this.exerciseList?.length > 0) { // for some reason without the ?. cehck lenght is reported as null here, look like something in the observable stack as the array is good
             this.exerciseList.splice(0, this.exerciseList.length);
           }
