@@ -32,17 +32,4 @@ export namespace ReadyToRunDTOs {
     exerciseId: number;
     stepIds: number[];
   }
-
-  interface IAllStandards {
-    standards: (ReadyToRunDTOs.IStandard[] | null);
-  }
-
-  interface IAllExercises {
-    exercises: (ReadyToRunDTOs.IExercise[] | null);
-  }
-
-  // interface IAllExercisesDTO {
-  //   status: IInternalStatus;
-  //   exercises: (ReadyToRunDTOs.IExercise[] | null);
-  // }
 }

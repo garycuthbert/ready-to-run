@@ -13,6 +13,7 @@ import { ExercisesModel } from './model/exercises.model';
 import { StepsModel } from './model/steps.model';
 import { ExerciseStepsModel } from './model/exercise-steps.model';
 import { ReadyToRunDTOs } from "@shared/model/ReadyToRunDTOs";
+import { nextTick } from 'process';
 
 class Server {
     public app: any;
@@ -89,19 +90,32 @@ class Server {
         * angular get * which swallows all gets
         *********************************************/
 
-        this.app.get('/webui/standards', (req: any, res: any) => {
-            const response = standards.getAllStandards();       
-            console.log('standards returning response.standards = ', response.standards);
-            return res.json(response);
+        this.app.get('/webui/standards', (req: any, res: any, next: any) => {
+            // Our api service code will return a promise so we can catch any error it may raise and 
+            // pass it on to the express error handling
+            standards.getAllStandards()
+            .then(data => {
+                // success, return the data
+                return res.json(data);
+            })
+            .catch(err => {
+                // promise was rejected, pass error onto error handler
+                next(err);
+            });
         });
 
-        this.app.get('/webui/standards/:id', (req: any, res: any) => {
-            const response = standards.getStandard(Number(req.params.id)); 
-            return res.json(response);
+        this.app.get('/webui/standards/:id', (req: any, res: any, next: any) => {            
+            standards.getStandard(Number(req.params.id))
+            .then(data => {
+                return res.json(data);
+            })
+            .catch(err => {
+                next(err);
+            });
         });
 
         this.app.get('/webui/exercises', (req: any, res: any, next: any) => {
-            // Out api service code will return a promise so we can catch any error it may raise and 
+            // Our api service code will return a promise so we can catch any error it may raise and 
             // pass it on to the express error handling
             exercises.getAllExercises()
                 .then(data => {
@@ -114,44 +128,53 @@ class Server {
                 });            
         });
 
-        this.app.get('/webui/exercise/summary/:id', (req: any, res: any) => {
-            const response = exercises.getExerciseSummary(Number(req.params.id));
-            return res.json(response);
+        this.app.get('/webui/exercise/summary/:id', (req: any, res: any, next: any) => {
+            exercises.getExerciseSummary(Number(req.params.id))
+            .then(data => {                
+                return res.json(data);
+            })
+            .catch(err => {
+                next(err);
+            });            
         });
 
-        this.app.get('/webui/exercise/detail/:id', (req: any, res: any) => {
-            let response = null;            
-            
-            response = exercises.getExerciseDetail(Number(req.params.id));
-                        
-            // we can examine the response for server status details and decide if we are in error
-            // and raise an error here
-            //if (Number(req.params.id) == 99) {
-                //throw Error('No not 99!');
-            //}
-            return res.json(response);
+        this.app.get('/webui/exercise/detail/:id', (req: any, res: any, next: any) => {
+            exercises.getExerciseDetail(Number(req.params.id))
+            .then(data => {
+                return res.json(data);
+            })
+            .catch(err => {
+                next(err);
+            });            
         });
 
-        this.app.get('/webui/steps/:stepids', (req: any, res: any) => {
-            const ids: number[] = [];
-
-            console.log('server.ts : getSteps: stepids query param = ', req.params.stepids);
+        this.app.get('/webui/steps/:stepids', (req: any, res: any, next: any) => {
+            const ids: number[] = [];            
             for (let step of req.params.stepids) {
                 let id = Number(step);
                 if (!Number.isNaN(id)) {
                     ids.push(id);
                 }
             }
-            console.log('server.ts : getSteps: parsed ids = ', ids);
-            //req?.params?.stepids?.forEach(id => ids.push(Number(id)));
 
-            const response = steps.getSteps(ids);
-            return res.json(response);
+            // Retrieve the step data
+            steps.getSteps(ids)
+            .then((stepsData) => {
+                res.json(stepsData);
+            })
+            .catch((err) => {
+                next(err);
+            });            
         });        
 
-        this.app.get('/webui/exercisesteps/:exerciseid', (req: any, res: any) => {
-            const response = exerciseSteps.getExerciseSteps(Number(req.params.exerciseid));
-            return res.json(response);
+        this.app.get('/webui/exercisesteps/:exerciseid', (req: any, res: any, next: any) => {
+            exerciseSteps.getExerciseSteps(Number(req.params.exerciseid))
+            .then((steps) => {
+                return res.json(steps);
+            })
+            .catch((err) => {
+                next(err);
+            });            
         });
 
         // Setup error handling

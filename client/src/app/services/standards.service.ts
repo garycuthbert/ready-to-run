@@ -26,7 +26,7 @@ export class StandardsService {
   ) {
     // Fetch initial data from the server, process it to set up the main store.
     // Subscribe to external notifications which will
-    this.http.get<ReadyToRunDTOs.IAllStandards>(this.standardsUrl).subscribe(
+    this.http.get<ReadyToRunDTOs.IStandard[]>(this.standardsUrl).subscribe(
       (allStandards) => {
         this.initialiseStandardsData(allStandards);
       }
@@ -48,37 +48,18 @@ export class StandardsService {
     const url = `${this.standardsUrl}/${id}`;
     return this.http.get<ReadyToRunDTOs.IStandard>(url)
       .pipe(
-        tap(data => console.log('getStandard: ' + JSON.stringify(data))),
-        catchError(this.handleError)
+        tap(data => console.log('getStandard: ' + JSON.stringify(data)))
       );
   }
 
-  private handleError(err: HttpErrorResponse) {
-    // in a real world app, we may send the server to some remote logging infrastructure
-    // instead of just logging it to the console
-    let errorMessage: string;
-
-    if (err.error instanceof Error) {
-        // A client-side or network error occurred. Handle it accordingly.
-        errorMessage = `An error occurred: ${err.error.message}`;
-    } else {
-        // The backend returned an unsuccessful response code.
-        // The response body may contain clues as to what went wrong,
-        errorMessage = `Backend returned code ${err.status}, body was: ${err.error}`;
-    }
-    console.error(errorMessage);
-
-    return EMPTY;
-  }
-
-  private initialiseStandardsData(allStandards: ReadyToRunDTOs.IAllStandards) {
+  private initialiseStandardsData(allStandards: ReadyToRunDTOs.IStandard[]) {
     console.log("initaliseStandardsData : processing allStandards = ", allStandards);
-    if (allStandards == null || allStandards.standards == null) {
+    if (allStandards == null) {
       return;
     }
 
     // TODO - look at deepCopy
-    this.standardsStore.standards = JSON.parse(JSON.stringify(allStandards.standards));
+    this.standardsStore.standards = JSON.parse(JSON.stringify(allStandards));
 
     this.publishAllStandards();
   }

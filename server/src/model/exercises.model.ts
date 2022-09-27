@@ -53,28 +53,68 @@ export class ExercisesModel {
     return ret;
   }
 
-  public getExerciseSummary(id: number): ReadyToRunDTOs.IExercise | null {
-    const exercise = this.exercises?.find((e) => e.id === id);
-    return exercise ?? null;
+  public getExerciseSummary(id: number): Promise<ReadyToRunDTOs.IExercise> {
+    const ret = new Promise<ReadyToRunDTOs.IExercise>((resolve, reject) => {
+      const exercise = this.exercises?.find((e) => e.id === id);
+      if (exercise != null) {
+        resolve(exercise);
+      }
+      else {
+        reject(exercise);
+      }
+    });
+
+    return ret;
   }
 
-  public getExerciseDetail(id: number): ReadyToRunDTOs.IExercise | null {
-    let exercise = this.getExerciseSummary(id);
-    if (exercise == null) {
-      throw Error("Exercise id '" + id + "' is invalid!");
-      //return exercise; // invalid id passed
-    }
+  public getExerciseDetail(id: number): Promise<ReadyToRunDTOs.IExercise> {
+    const ret = new Promise<ReadyToRunDTOs.IExercise>((resolve, reject) => {
+      let exercise = this.exercises?.find((e) => e.id === id);
+      
+      let err = { ...this.error };
+      err.message = "System Error: Exercise details (id = " + id + ") are not available on the server.";
 
-    const stepsLookup = this.exerciseSteps.getExerciseSteps(id);
-    if (stepsLookup.stepIds.length < 1) {
-      return exercise; // this exercise has not steps
-    }
+      if (exercise == null) {        
+        reject(err);
+      } 
 
-    const stepsDetail = this.steps.getSteps(stepsLookup.stepIds);
-    if (stepsDetail.length > 0) {
-      exercise.steps = JSON.parse(JSON.stringify(stepsDetail));
-    }
+      this.exerciseSteps.getExerciseSteps(id)
+      .then((steps) => {
+        if (steps.stepIds.length < 1) {
+          if (exercise == null) {
+            // typescript limitation? we have already established that exercies is not null
+            reject(err);
+          }
+          else {
+            // this exercise has no steps, still valid
+            resolve(exercise);
+          }           
+        }      
+      
+        this.steps.getSteps(steps.stepIds)
+        .then((stepsDetail) => {
+          if (exercise == null) {
+            // typescript limitation? we have already established that exercies is not null
+            reject(err);
+          }
+          else {
+            if (stepsDetail.length > 0) {
+              // Add the steps to the exercise object for return
+              exercise.steps = JSON.parse(JSON.stringify(stepsDetail));
+            }
 
-    return exercise;
+            resolve(exercise);
+          }          
+        })
+        .catch((error) => {
+          reject(error);
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
+    });
+
+    return ret;
   }
 }
