@@ -10,6 +10,16 @@ export class UserDetailsModel {
     private readonly issuer = "Square Dawn r2r";
     private readonly audience = "http://squaredawn.net";
 
+    private readonly privateKey: string;
+    private readonly publicKey: string;
+
+    private readonly payload = {
+        data1: "Will",
+        data2: "Paul",
+        data3: "Fiona",
+        data4: "Bharti",
+      };
+
     private logonSuccessStatus : ReadyToRunDTOs.IInternalStatus = {
         code: 1201,
         message: 'Login successful'
@@ -34,8 +44,15 @@ export class UserDetailsModel {
                 logonFail.message = 'User login failed';
                 resolve({ token: null, status: logonFail });
             } else {
-                let logonToken = 'userlogintoken';
-                resolve({ token: logonToken, status: this.logonSuccessStatus });
+                //let logonToken = 'userlogintoken';
+                const verifyOptions: JWT.VerfiyOptions = {
+                    issuer: this.issuer,
+                    audience: this.audience,
+                    maxAge: "12h",
+                    algorithms: ["RS256"]
+                };
+                const jwToken = JWT.sign(this.payload, this.privateKey, verifyOptions);
+                resolve({ token: jwtToken, status: this.logonSuccessStatus });
             }
         });
     }
