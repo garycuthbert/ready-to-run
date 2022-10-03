@@ -8,6 +8,18 @@ export namespace ReadyToRunDTOs {
     message: string;
   }
 
+  interface IUserInfo {
+    firstName: string;
+    lastName: string;
+    username: string;
+    administrator: boolean;
+  }
+
+  interface IAuthenticationReply {
+    token: string | null;
+    status: IInternalStatus;
+  }
+
   interface IStandard {
     id: number;
     number: number;

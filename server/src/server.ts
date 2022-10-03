@@ -177,6 +177,13 @@ class Server {
             });            
         });
 
+        /**
+         * 
+         */
+        this.app.post('/webui/users/authenticate', (req: any, res: any, next: any) => {
+            
+        });
+
         // Setup error handling
         this.app.use(this.errorLogger);
         this.app.use(this.errorResponder);
