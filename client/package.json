@@ -6,6 +6,7 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
+    "build_squaredawn": "ng build --base-href squaredawn.net",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
